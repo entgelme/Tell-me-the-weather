@@ -1,0 +1,330 @@
+[
+    {
+        "id": "ae1886e9.b94ea8",
+        "type": "tab",
+        "label": "Tell me the weather"
+    },
+    {
+        "id": "508d4953.f5fd6",
+        "type": "weather_insights",
+        "z": "ae1886e9.b94ea8",
+        "name": "Current weather",
+        "host": "twcservice.eu-gb.mybluemix.net",
+        "service": "/observations.json",
+        "geocode": "",
+        "units": "m",
+        "language": "de",
+        "x": 268.5,
+        "y": 518,
+        "wires": [
+            [
+                "e9d368de.781758",
+                "538601e.2334b8"
+            ]
+        ]
+    },
+    {
+        "id": "e9d368de.781758",
+        "type": "debug",
+        "z": "ae1886e9.b94ea8",
+        "name": "complete weather object",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 291,
+        "y": 591,
+        "wires": []
+    },
+    {
+        "id": "538601e.2334b8",
+        "type": "function",
+        "z": "ae1886e9.b94ea8",
+        "name": "Filter Temp",
+        "func": "/*mytext = \"Aktuelle Temperatur in \"\nmytext = mytext + msg.observation.obs_name + \": \";\nmytext = mytext + msg.observation.temp + \"°C\";\nreturn {payload: mytext};*/\nmsg={\n  temp: msg.observation.temp,\n  city: msg.observation.obs_name\n}\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 499,
+        "y": 518,
+        "wires": [
+            [
+                "1daa7952.b455e7"
+            ]
+        ]
+    },
+    {
+        "id": "49671172.9606b",
+        "type": "debug",
+        "z": "ae1886e9.b94ea8",
+        "name": "Output",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 922,
+        "y": 518,
+        "wires": []
+    },
+    {
+        "id": "3502ee7b.92e8f2",
+        "type": "watson-text-to-speech",
+        "z": "ae1886e9.b94ea8",
+        "name": "Say it ... (in german)",
+        "lang": "de-DE",
+        "langhidden": "de-DE",
+        "langcustom": "NoCustomisationSetting",
+        "langcustomhidden": "",
+        "voice": "de-DE_BirgitVoice",
+        "voicehidden": "",
+        "format": "audio/wav",
+        "password": "pBt4BToOWGMI",
+        "x": 224.5,
+        "y": 762,
+        "wires": [
+            [
+                "334ce332.32cb6c"
+            ]
+        ]
+    },
+    {
+        "id": "39da0ac2.f867d6",
+        "type": "play audio",
+        "z": "ae1886e9.b94ea8",
+        "name": "play",
+        "voice": "27",
+        "x": 707.5,
+        "y": 761,
+        "wires": []
+    },
+    {
+        "id": "334ce332.32cb6c",
+        "type": "function",
+        "z": "ae1886e9.b94ea8",
+        "name": "Adjust speech buffer",
+        "func": "return {payload:msg.speech};\n",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 466.5,
+        "y": 762,
+        "wires": [
+            [
+                "39da0ac2.f867d6"
+            ]
+        ]
+    },
+    {
+        "id": "af33d6c4.c196f",
+        "type": "http request",
+        "z": "ae1886e9.b94ea8",
+        "name": "Geolocation Service",
+        "method": "GET",
+        "ret": "obj",
+        "url": "",
+        "tls": "",
+        "x": 774.5,
+        "y": 265,
+        "wires": [
+            [
+                "e2fc6e13.e6797",
+                "5c038e32.e1d69"
+            ]
+        ]
+    },
+    {
+        "id": "e2fc6e13.e6797",
+        "type": "debug",
+        "z": "ae1886e9.b94ea8",
+        "name": "Geo",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 750.5,
+        "y": 342,
+        "wires": []
+    },
+    {
+        "id": "308f271b.df1288",
+        "type": "inject",
+        "z": "ae1886e9.b94ea8",
+        "name": "",
+        "topic": "Inject",
+        "payload": "",
+        "payloadType": "date",
+        "repeat": "",
+        "crontab": "",
+        "once": false,
+        "x": 272.5,
+        "y": 126,
+        "wires": [
+            [
+                "f7d90c06.4be0c8"
+            ]
+        ]
+    },
+    {
+        "id": "f7d90c06.4be0c8",
+        "type": "function",
+        "z": "ae1886e9.b94ea8",
+        "name": "Define location",
+        "func": "msg={\n  street: \"IBM Allee\",\n  city: \"Ehningen\",\n  country: \"germany\"\n  }\nmsg={\n  street: \"Jungfernstieg\",\n  city: \"Hamburg\",\n  country: \"germany\"\n  }\n    \nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 268.5,
+        "y": 268,
+        "wires": [
+            [
+                "282a4c96.40ca6c",
+                "758ecbbe.ef550c"
+            ]
+        ]
+    },
+    {
+        "id": "1daa7952.b455e7",
+        "type": "template",
+        "z": "ae1886e9.b94ea8",
+        "name": "Build full answer",
+        "field": "payload",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "Aktuelle Temperatur in {{city}}: {{temp}} °C",
+        "x": 724.5,
+        "y": 517,
+        "wires": [
+            [
+                "3502ee7b.92e8f2",
+                "49671172.9606b"
+            ]
+        ]
+    },
+    {
+        "id": "282a4c96.40ca6c",
+        "type": "template",
+        "z": "ae1886e9.b94ea8",
+        "name": "Build URL for OSM",
+        "field": "url",
+        "fieldType": "msg",
+        "format": "handlebars",
+        "syntax": "mustache",
+        "template": "http://nominatim.openstreetmap.org/search?q={{street}},+{{city}},+{{country}}&format=json\n",
+        "x": 521.5,
+        "y": 265,
+        "wires": [
+            [
+                "6a8df04f.1926f",
+                "af33d6c4.c196f"
+            ]
+        ]
+    },
+    {
+        "id": "758ecbbe.ef550c",
+        "type": "debug",
+        "z": "ae1886e9.b94ea8",
+        "name": "Loc",
+        "active": false,
+        "console": "false",
+        "complete": "true",
+        "x": 253.5,
+        "y": 342,
+        "wires": []
+    },
+    {
+        "id": "6a8df04f.1926f",
+        "type": "debug",
+        "z": "ae1886e9.b94ea8",
+        "name": "URL",
+        "active": true,
+        "console": "false",
+        "complete": "true",
+        "x": 504,
+        "y": 341,
+        "wires": []
+    },
+    {
+        "id": "ada06a97.95e3a8",
+        "type": "debug",
+        "z": "ae1886e9.b94ea8",
+        "name": "Geopos",
+        "active": true,
+        "console": "false",
+        "complete": "payload",
+        "x": 1050.5,
+        "y": 195,
+        "wires": []
+    },
+    {
+        "id": "5c038e32.e1d69",
+        "type": "function",
+        "z": "ae1886e9.b94ea8",
+        "name": "Geopos",
+        "func": "msg.payload=msg.payload[0].lat+\",\"+msg.payload[0].lon\nreturn msg;",
+        "outputs": 1,
+        "noerr": 0,
+        "x": 1014.5,
+        "y": 265,
+        "wires": [
+            [
+                "ada06a97.95e3a8",
+                "508d4953.f5fd6"
+            ]
+        ]
+    },
+    {
+        "id": "ed50596b.2677b",
+        "type": "comment",
+        "z": "ae1886e9.b94ea8",
+        "name": "Possible enhancements",
+        "info": "* Provide http-Service here (to be used by Web-/Mobile-App)\n* Let Watson Conversation ask for the location (instead of hard code it)",
+        "x": 157,
+        "y": 909,
+        "wires": []
+    },
+    {
+        "id": "5e8a3548.289594",
+        "type": "comment",
+        "z": "ae1886e9.b94ea8",
+        "name": "Initiator: manual (inject)",
+        "info": "",
+        "x": 152,
+        "y": 63,
+        "wires": []
+    },
+    {
+        "id": "cf594bd7.46923",
+        "type": "comment",
+        "z": "ae1886e9.b94ea8",
+        "name": "Location: adress (here: \"hard coded\")",
+        "info": "",
+        "x": 206,
+        "y": 193,
+        "wires": []
+    },
+    {
+        "id": "39e6e796.b13e98",
+        "type": "comment",
+        "z": "ae1886e9.b94ea8",
+        "name": "Find geo position of adress (external service: Openstreetmap)",
+        "info": "",
+        "x": 660,
+        "y": 196,
+        "wires": []
+    },
+    {
+        "id": "c91d9d51.4f3fa",
+        "type": "comment",
+        "z": "ae1886e9.b94ea8",
+        "name": "Get weather data for geo position, extract the temperature value and create full answer from it",
+        "info": "",
+        "x": 379,
+        "y": 445,
+        "wires": []
+    },
+    {
+        "id": "c4978c4f.62a44",
+        "type": "comment",
+        "z": "ae1886e9.b94ea8",
+        "name": "Convert answer to speech (temperature at selected address)",
+        "info": "",
+        "x": 280,
+        "y": 681,
+        "wires": []
+    }
+]
