@@ -4,6 +4,8 @@ A demo of Node RED, the Weather Company Data and Watson services - all on IBM Bl
 Author: Andreas Entgelmeier
 Subject of demonstration: how to quickly create a flow in Node RED, and how easy it is to use WeatherCompany service and Watson Service
 
+![Flow](Screenshot.JPG)
+
 ## Prerequisite:
 1.	A valid Bluemix account
 
@@ -95,6 +97,9 @@ Leave all other parameters unchanged, especially the URL parameter. This node ta
 | Language |	\<Select your preferred language here. Use a language code, e.g. en-US for US english or de for german. See the Weather Company Data service documentation for more details.\> |
 
 Note: to provide this node access to your prepared weather service, you have to put in the according values for Username and Password. You can find these values in the dashboard of your service instance, in the tab Service Credentials. See the attached screenshot. If you created the credentials in the preparation, you will see them now, when clicking on View credentials. 
+
+![credentials](service_credentials.JPG)
+
 
 Optionally create and connect another debug node to watch the output of the Weather Company Data node.
 
