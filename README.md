@@ -2,6 +2,7 @@
 A demo of Node RED, the Weather Company Data and Watson services - all on IBM Bluemix
 
 Author: Andreas Entgelmeier
+
 Subject of demonstration: how to quickly create a flow in Node RED, and how easy it is to use WeatherCompany service and Watson Service
 
 ![Flow](Screenshot.JPG)
