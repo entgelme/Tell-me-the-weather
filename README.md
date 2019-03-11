@@ -129,7 +129,7 @@ To print out the complete answer, you may insert another *debug* node here. It s
 ### Part 3: Speak out the answer
 
 12.	Now it's time to use a Watson service. It shall convert the complete answer to speech, which can then be played via your computer's speakers. First, create a node of type *text-to-speech* (from the palette's *Watson* category) and link it to the output of the node *Build full answer*. 
-Open the new node and uncheck the checkbox *Use Default Service Endpoint*. The complete the configuration to:
+Open the new node and uncheck the checkbox *Use Default Service Endpoint*. Then complete the configuration to:
 
 | Parameter |	Value |
 | --------- | ----- |
@@ -141,7 +141,8 @@ Open the new node and uncheck the checkbox *Use Default Service Endpoint*. The c
 | Format |	WAV |
 
 \* replace  \<language\> by your preferred language
-Notes: 
+
+**Notes:** 
 * due to a "surprising feature" of the UI, it might be neccessary to switch the *Language* entry to another (arbitrary) value and back to the desired setting, until you will see valid choices in the *Voice* drop-down.
 * If you check *Place output on msg.payload*, you can skip the next step (13).
 
