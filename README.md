@@ -93,6 +93,7 @@ Leave all other parameters unchanged, especially the *URL* parameter. This node 
 | Name |	Current weather |
 | Username |	\<take this value from the credentials of your Weather Company Data service instance\> |
 | Password |	\<take this value from the credentials of your Weather Company Data service instance\> |
+| API Host |	\<take this value from the credentials of your Weather Company Data service instance\>  |
 | Service |	Current observations |
 | Units |	Metric |
 | Language |	\<Select your preferred language here. Use a language code, e.g. en-US for US english or de for german. See the [Weather Company Data service documentation](https://console.bluemix.net/docs/services/Weather/index.html) for more details.\> |
@@ -127,7 +128,8 @@ To print out the complete answer, you may insert another *debug* node here. It s
 
 ### Part 3: Speak out the answer
 
-12.	Now it's time to use a Watson service. It shall convert the complete answer to speech, which can then be played via your computer's speakers. First, create a node of type *text-to-speech* (from the palette's *Watson* category) and link it to the output of the node *Build full answer*. Configure it to:
+12.	Now it's time to use a Watson service. It shall convert the complete answer to speech, which can then be played via your computer's speakers. First, create a node of type *text-to-speech* (from the palette's *Watson* category) and link it to the output of the node *Build full answer*. 
+Open the new node and uncheck the checkbox *Use Default Service Endpoint*. The complete the configuration to:
 
 | Parameter |	Value |
 | --------- | ----- |
@@ -139,6 +141,9 @@ To print out the complete answer, you may insert another *debug* node here. It s
 | Format |	WAV |
 
 \* replace  \<language\> by your preferred language
+Notes: 
+* due to a "surprising feature" of the UI, it might be neccessary to switch the *Language* entry to another (arbitrary) value and back to the desired setting, until you will see valid choices in the *Voice* drop-down.
+* If you check *Place output on msg.payload*, you can skip the next step (13).
 
 13.	Create and connect another *function* node to reorder parameters in the *msg* object again. Configure it to:
 
